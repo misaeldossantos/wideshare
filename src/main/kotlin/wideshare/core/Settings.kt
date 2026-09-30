@@ -21,6 +21,7 @@ class Settings(
     var sendAudio: Boolean = false,
     var receiveClipboard: Boolean = false,
     var receiveFolder: String = defaultReceiveFolder(),
+    var closeToTray: Boolean = false,
     val positions: MutableMap<String, GridPos> = mutableMapOf(),
     val paired: MutableMap<String, PairedPeer> = mutableMapOf(),
 ) {
@@ -37,6 +38,7 @@ class Settings(
         p["sendAudio"] = sendAudio.toString()
         p["receiveClipboard"] = receiveClipboard.toString()
         p["receiveFolder"] = receiveFolder
+        p["closeToTray"] = closeToTray.toString()
         paired.forEach { (id, peer) -> p["paired.$id"] = "${Auth.hex(peer.psk)}|${peer.name}" }
         positions.forEach { (client, pos) -> p["pos.$client"] = "${pos.x},${pos.y}" }
         runCatching {
@@ -70,6 +72,7 @@ class Settings(
             s.sendAudio = p.getProperty("sendAudio", "false").toBoolean()
             s.receiveClipboard = p.getProperty("receiveClipboard", s.shareClipboard.toString()).toBoolean()
             p.getProperty("receiveFolder")?.takeIf { it.isNotBlank() }?.let { s.receiveFolder = it }
+            s.closeToTray = p.getProperty("closeToTray", "false").toBoolean()
             p.stringPropertyNames().filter { it.startsWith("pos.") }.forEach { k ->
                 val (x, y) = p.getProperty(k).split(",").mapNotNull { it.trim().toIntOrNull() }.takeIf { it.size == 2 } ?: return@forEach
                 s.positions[k.removePrefix("pos.")] = GridPos(x, y)

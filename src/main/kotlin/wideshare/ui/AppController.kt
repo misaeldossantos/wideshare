@@ -32,6 +32,7 @@ class AppController {
     val shareClipboard = MutableStateFlow(settings.shareClipboard)
     val sendAudio = MutableStateFlow(settings.sendAudio)
     val receiveClipboard = MutableStateFlow(settings.receiveClipboard)
+    val closeToTray = MutableStateFlow(settings.closeToTray)
 
     val section = MutableStateFlow(ServerSection.POSITIONS)
     val clientSection = MutableStateFlow(ClientSection.SERVERS)
@@ -64,6 +65,7 @@ class AppController {
     fun setLanguage(v: Language) { I18n.language = v; language.value = v; persist() }
     fun setShareClipboard(v: Boolean) { shareClipboard.value = v; persist() }
     fun setReceiveClipboard(v: Boolean) { receiveClipboard.value = v; persist() }
+    fun setCloseToTray(v: Boolean) { closeToTray.value = v; persist() }
     fun setSendAudio(v: Boolean) { sendAudio.value = v; persist(); kotlin.concurrent.thread(isDaemon = true) { client?.refreshAudio() } }
 
     /** Only one pairing at a time: simultaneous requests are declined. */
@@ -83,6 +85,7 @@ class AppController {
         settings.shareClipboard = shareClipboard.value
         settings.sendAudio = sendAudio.value
         settings.receiveClipboard = receiveClipboard.value
+        settings.closeToTray = closeToTray.value
         settings.save()
     }
 

@@ -72,12 +72,14 @@ internal fun PairedPage(c: AppController) {
 private fun SettingsPage(c: AppController) {
     val running by c.running.collectAsState()
     val name by c.name.collectAsState()
+    val tray by c.closeToTray.collectAsState()
     ScrollPage {
         PageHeader(tr("settings.title"), tr("settings.server.subtitle"))
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             SectionLabel(tr("settings.name"))
             Field(name, c::setName, tr("settings.name.hint"), enabled = !running)
         }
+        Toggle(tr("settings.tray"), tray, c::setCloseToTray)
         ThemeSelect(c)
         LanguageSelect(c)
         ReceiveFolder(c)

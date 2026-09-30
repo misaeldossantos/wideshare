@@ -28,6 +28,7 @@ private fun ClientSettingsPage(c: AppController) {
     val name by c.name.collectAsState()
     val auto by c.autoConnect.collectAsState()
     val sendAudio by c.sendAudio.collectAsState()
+    val tray by c.closeToTray.collectAsState()
     ScrollPage {
         PageHeader(tr("settings.title"), tr("settings.client.subtitle"))
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -37,6 +38,7 @@ private fun ClientSettingsPage(c: AppController) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Toggle(tr("settings.auto"), auto, c::setAutoConnect)
             Toggle(tr("settings.sendAudio"), sendAudio, c::setSendAudio)
+            Toggle(tr("settings.tray"), tray, c::setCloseToTray)
         }
         ThemeSelect(c)
         LanguageSelect(c)
