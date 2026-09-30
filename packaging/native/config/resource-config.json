@@ -1,0 +1,40 @@
+{
+  "resources":{
+  "includes":[{
+    "pattern":"\\QMETA-INF/services/kotlinx.coroutines.internal.MainDispatcherFactory\\E"
+  }, {
+    "pattern":"\\Qcom/sun/jna/win32-x86-64/jnidispatch.dll\\E"
+  }, {
+    "pattern":"\\Qfonts/Inter-Bold.ttf\\E"
+  }, {
+    "pattern":"\\Qfonts/Inter-Medium.ttf\\E"
+  }, {
+    "pattern":"\\Qfonts/Inter-Regular.ttf\\E"
+  }, {
+    "pattern":"\\Qfonts/Inter-SemiBold.ttf\\E"
+  }, {
+    "pattern":"\\Qi18n/en.properties\\E"
+  }, {
+    "pattern":"\\Qi18n/es.properties\\E"
+  }, {
+    "pattern":"\\Qi18n/pt.properties\\E"
+  }, {
+    "pattern":"\\Qicon.png\\E"
+  }, {
+    "pattern":"\\Qicudtl.dat\\E"
+  }, {
+    "pattern":"\\Qskiko-windows-x64.dll.sha256\\E"
+  }, {
+    "pattern":"\\Qskiko-windows-x64.dll\\E"
+  }]},
+  "bundles":[{
+    "name":"com.sun.swing.internal.plaf.basic.resources.basic",
+    "classNames":["com.sun.swing.internal.plaf.basic.resources.basic"]
+  }, {
+    "name":"com.sun.swing.internal.plaf.metal.resources.metal",
+    "classNames":["com.sun.swing.internal.plaf.metal.resources.metal"]
+  }, {
+    "name":"sun.awt.resources.awt",
+    "classNames":["sun.awt.resources.awt"]
+  }]
+}
