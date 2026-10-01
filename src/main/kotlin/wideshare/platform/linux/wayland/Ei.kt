@@ -32,10 +32,10 @@ internal interface Ei : Library {
         const val SEAT_ADDED = 3
         const val DISCONNECT = 2
         const val POINTER_MOTION = 300
-        const val BUTTON = 400
-        const val SCROLL_DELTA = 500
-        const val SCROLL_DISCRETE = 503
-        const val KEY = 600
+        const val BUTTON = 500
+        const val SCROLL_DELTA = 600
+        const val SCROLL_DISCRETE = 603
+        const val KEY = 700
 
         // enum ei_device_capability
         const val CAP_POINTER = 1
