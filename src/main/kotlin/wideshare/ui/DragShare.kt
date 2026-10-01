@@ -18,6 +18,7 @@ internal class DragShare(private val c: AppController) {
             val watcher = DragWatcher(
                 probe, ui, ::peers, { runCatching { MouseInfo.getPointerInfo()?.location }.getOrNull() },
                 c.files.hooks.stash, Platform::dragSelection, { work -> thread(isDaemon = true, name = "drag-select") { work() } },
+                zoneFallback = !Platform.isWindows,
             )
             try {
                 while (running) {

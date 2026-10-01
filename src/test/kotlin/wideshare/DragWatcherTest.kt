@@ -73,6 +73,18 @@ class DragWatcherTest {
     }
 
     @Test
+    fun withoutAFileListAndNoFallbackTheDragIsIgnored() {
+        selection = emptyList()
+        val quiet = DragWatcher(probe, ui, { peers }, { at }, stash, { selection }, { it() }, zoneFallback = false)
+        probe.down = true
+        quiet.tick()
+        at = Point(140, 100)
+        probe.dragging = true
+        quiet.tick()
+        assertEquals(listOf("follow 140,100"), ui.events, "no icon and no zone for something that may be text")
+    }
+
+    @Test
     fun aDragTakenToTheOtherComputerKeepsItsFilesUntilTheDrop() {
         startDrag()
         stash.announced = true

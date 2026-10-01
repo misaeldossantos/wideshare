@@ -17,7 +17,8 @@ internal interface DragUi {
 /**
  * Follows the mouse: when the left button is pressed, the cursor has moved far enough and the system confirms
  * a drag, shows the icon and keeps the dragged files in [stash] ([select] reads them, in the background
- * via [spawn]). If it cannot tell which files they are, shows a local drop zone. When the button is released, hides everything.
+ * via [spawn]). If it cannot tell which files they are, shows a local drop zone when [zoneFallback] is on; otherwise
+ * the drag is ignored (it may be plain text). When the button is released, hides everything.
  * Call [tick] often.
  */
 internal class DragWatcher(
@@ -28,6 +29,7 @@ internal class DragWatcher(
     private val stash: DragStash,
     private val select: () -> List<File>,
     private val spawn: (() -> Unit) -> Unit,
+    private val zoneFallback: Boolean = true,
 ) {
     private var press: Point? = null
     @Volatile private var active = false
@@ -61,11 +63,13 @@ internal class DragWatcher(
     private fun begin(targets: List<String>) {
         active = true
         stash.begin()
-        ui.showIcon()
+        if (zoneFallback) ui.showIcon()
         spawn {
             val files = select()
             stash.files = files
-            if (files.isEmpty() && active) ui.showZone(targets)
+            if (!active) return@spawn
+            if (files.isNotEmpty()) { if (!zoneFallback) ui.showIcon() }
+            else if (zoneFallback) ui.showZone(targets)
         }
     }
 

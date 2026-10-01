@@ -7,6 +7,7 @@ import com.sun.jna.NativeLong
 import com.sun.jna.Pointer
 import com.sun.jna.ptr.IntByReference
 import com.sun.jna.ptr.NativeLongByReference
+import com.sun.jna.ptr.PointerByReference
 
 interface Xlib : Library {
     fun XOpenDisplay(name: String?): Pointer?
@@ -31,6 +32,18 @@ interface Xlib : Library {
     fun XWarpPointer(display: Pointer, src: NativeLong, dest: NativeLong, sx: Int, sy: Int, sw: Int, sh: Int, dx: Int, dy: Int): Int
     fun XInternAtom(display: Pointer, name: String, onlyIfExists: Int): NativeLong
     fun XGetSelectionOwner(display: Pointer, selection: NativeLong): NativeLong
+    fun XCreateSimpleWindow(
+        display: Pointer, parent: NativeLong, x: Int, y: Int, w: Int, h: Int, border: Int, borderColor: NativeLong, background: NativeLong,
+    ): NativeLong
+    fun XDestroyWindow(display: Pointer, window: NativeLong): Int
+    fun XConvertSelection(display: Pointer, selection: NativeLong, target: NativeLong, property: NativeLong, requestor: NativeLong, time: NativeLong): Int
+    fun XCheckTypedWindowEvent(display: Pointer, window: NativeLong, type: Int, event: Pointer): Int
+    fun XGetWindowProperty(
+        display: Pointer, window: NativeLong, property: NativeLong, offset: NativeLong, length: NativeLong, delete: Int, reqType: NativeLong,
+        actualType: NativeLongByReference, actualFormat: IntByReference, nItems: NativeLongByReference, bytesAfter: NativeLongByReference,
+        data: PointerByReference,
+    ): Int
+    fun XFree(data: Pointer): Int
     fun XFlush(display: Pointer): Int
     fun XSync(display: Pointer, discard: Int): Int
     fun XkbSetDetectableAutoRepeat(display: Pointer, detectable: Int, supported: IntByReference?): Int
