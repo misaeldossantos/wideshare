@@ -10,7 +10,7 @@ import kotlin.test.assertTrue
 class LinuxSmokeTest {
     @Test
     fun x11InjectorMovesPointerAndCaptureSeesIt() {
-        assumeTrue(!Platform.isWindows && System.getenv("DISPLAY") != null)
+        assumeTrue(!Platform.isWindows && !Platform.isWayland && System.getenv("DISPLAY") != null)
         val moves = CopyOnWriteArrayList<Pair<Int, Int>>()
         val capture = Platform.createCapture()
         capture.start(object : CaptureListener {

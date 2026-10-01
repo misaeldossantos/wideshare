@@ -41,7 +41,7 @@ WideShare is **open source** software that lets you control several computers wi
 - **Audio sharing**: stream the sound of one computer to play on another.
 - **Automatic discovery**: computers find each other on the local network and reconnect on their own.
 - **Secure pairing**: each device is authorized once, and all traffic uses an encrypted, authenticated channel.
-- **Cross-platform**: Windows and Linux (X11), as server or client.
+- **Cross-platform**: Windows and Linux (X11 and Wayland), as server or client. On Wayland it uses the desktop portals (RemoteDesktop to receive input, InputCapture with `libei` to share it): the desktop asks for approval the first time, and capture needs GNOME 45+ or a KDE version that implements InputCapture; otherwise it falls back to X11/XWayland.
 - **Modern interface** built with Compose Desktop, with light, dark or automatic theme.
 - **Three languages**: English, Portuguese and Spanish.
 

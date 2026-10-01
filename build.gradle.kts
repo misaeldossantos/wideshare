@@ -17,6 +17,9 @@ dependencies {
     implementation(compose.material3)
     implementation("net.java.dev.jna:jna:5.14.0")
     implementation("net.java.dev.jna:jna-platform:5.14.0")
+    implementation("com.github.hypfvieh:dbus-java-core:5.2.2")
+    implementation("com.github.hypfvieh:dbus-java-transport-jnr-unixsocket:5.2.2")
+    runtimeOnly("org.slf4j:slf4j-nop:2.0.16")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.9.0")
     testImplementation(kotlin("test"))
 }

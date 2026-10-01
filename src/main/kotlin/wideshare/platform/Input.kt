@@ -43,11 +43,21 @@ interface InputInjector {
 object Platform {
     val isWindows = System.getProperty("os.name").lowercase().contains("win")
 
-    fun createCapture(): InputCapture =
-        if (isWindows) wideshare.platform.windows.WindowsCapture() else wideshare.platform.linux.X11Capture()
+    /** Linux session on Wayland, where the portals take the place of X11 for input. */
+    val isWayland = !isWindows && wideshare.platform.linux.wayland.WaylandSupport.isWayland
 
-    fun createInjector(): InputInjector =
-        if (isWindows) wideshare.platform.windows.WindowsInjector() else wideshare.platform.linux.X11Injector()
+    fun createCapture(): InputCapture = when {
+        isWindows -> wideshare.platform.windows.WindowsCapture()
+        // Without the portal (older desktops) it falls back to X11, which XWayland still serves partially.
+        isWayland -> wideshare.platform.linux.wayland.WaylandSupport.capture() ?: wideshare.platform.linux.X11Capture()
+        else -> wideshare.platform.linux.X11Capture()
+    }
+
+    fun createInjector(): InputInjector = when {
+        isWindows -> wideshare.platform.windows.WindowsInjector()
+        isWayland -> wideshare.platform.linux.wayland.WaylandSupport.injector() ?: wideshare.platform.linux.X11Injector()
+        else -> wideshare.platform.linux.X11Injector()
+    }
 
     /** File drag probe, or null if this system does not support it. */
     fun createDragProbe(): DragProbe? = runCatching {
